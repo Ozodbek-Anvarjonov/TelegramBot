@@ -1,4 +1,5 @@
-﻿using TelegramBot.Application.Services;
+﻿using Telegram.Bot;
+using TelegramBot.Application.Services;
 using TelegramBot.Infrastrucutre.Common.Settings;
 using TelegramBot.Infrastrucutre.Services;
 
@@ -9,6 +10,9 @@ public static partial class HostConfigurations
     private static WebApplicationBuilder AddInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.Configure<BotSettings>(builder.Configuration.GetSection(nameof(BotSettings)));
+        builder.Services
+            .AddScoped<ITelegramBotClient, TelegramBotClient>(option =>
+            new TelegramBotClient(builder.Configuration.GetSection("BotSettings:Token").Value!));
 
         builder.Services
             .AddScoped<IMessageService, MessageService>()

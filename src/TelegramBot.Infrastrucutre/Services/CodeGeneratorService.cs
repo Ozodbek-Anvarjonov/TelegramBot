@@ -9,10 +9,6 @@ namespace TelegramBot.Infrastrucutre.Services;
 
 public class CodeGeneratorService : ICodeGeneratorService
 {
-    public ValueTask<int> GenerateCode()
-    {
-        var random = new Random();
-
-        return new(random.Next(100000, 999999));
-    }
+    public ValueTask<int> GenerateCode() =>
+        new(new Random().Next(100000, 999999));
 }
